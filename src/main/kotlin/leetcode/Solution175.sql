@@ -1,0 +1,1 @@
+select firstName, lastName, city, state from person left outer join  Address A on person.personId = A.personId;
