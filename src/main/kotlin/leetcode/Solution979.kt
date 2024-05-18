@@ -10,49 +10,43 @@ class Solution979 {
     }
 
     fun distributeCoins(root: TreeNode?): Int {
-        if (root!!.left == null && root.right == null) {
-            return 0
-        }
-
-        recursiveCheck(root, root.left)
-
-        recursiveCheck(root, root.right)
+        recursiveCheck(root)
 
         return count
     }
 
-    private fun recursiveCheck(head: TreeNode, node: TreeNode?) {
+    private fun recursiveCheck(node: TreeNode?): Int {
         if (node == null) {
-            return
+            return  0
         }
 
-        recursiveCheck(
-            head = node,
+        val leftValue = recursiveCheck(
             node = node.left
         )
 
-        recursiveCheck(
-            head = node,
+        val rightValue = recursiveCheck(
             node = node.right
         )
 
-        val value = node.`val`
+        val value = node.`val` + leftValue + rightValue
 
-        when {
-            value == 1 -> {
-                return
-            }
-
+        return when {
             value > 1 -> {
                 val sendToHeadCount = value - 1
-                head.`val` += sendToHeadCount
+
                 count += sendToHeadCount
+                sendToHeadCount
             }
 
             value < 1 -> {
                 val getToHeadCount = 1 - value
-                head.`val` -= getToHeadCount
+
                 count += getToHeadCount
+                getToHeadCount * -1
+            }
+
+            else -> {
+                0
             }
         }
     }
